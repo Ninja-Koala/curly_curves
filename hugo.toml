@@ -1,0 +1,46 @@
+baseurl = 'https://ninjakoa.la/'
+languagecode = 'en-us'
+title = 'Curly Curves'
+theme = 'kiera'
+canonifyurls = true
+
+paginate = 3
+
+summaryLength = 30
+enableEmoji = true
+pygmentsCodeFences = true
+
+[author]
+    name = "NinjaKoala"
+    github = "Ninja-Koala"
+	shadertoy = "NinjaKoala"
+	mastodon = "chaos.social/@NinjaKoala"
+	pouet = "104804"
+    #gitlab = "username"
+    #twitter = "_NinjaKoala_"
+    #stackoverflow = "username"
+    #youtube = "user/username" # or channel/channelname
+
+[params]
+    tagline = "A blog about math and computer graphics"
+    description = "A blog about math and computer graphics"
+    images = [""] #This is used for opengraph/twitter cards.
+    customCSS = []  #Optional Customised CSS
+    favicon = "curly_curves.svg"
+    #homepageLength = 10
+    mathjax = true #Enable display of mathematics using mathjax (LaTeX syntax)
+    #katex = true #Enable display of mathematics using katex (Faster LaTeX rendering)
+
+# uncomment to enable the Tags link on the main toolbar
+#  [[menu.main]]
+#    identifier = "tags"
+#    name = "Tags"
+#    url = "/tags"
+#    weight = 1
+
+# uncomment to enable the Categories link on the main toolbar
+#  [[menu.main]]
+#    identifier = "categories"
+#    name = "Categories"
+#    url = "/categories"
+#    weight = 1
