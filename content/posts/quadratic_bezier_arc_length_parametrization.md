@@ -54,10 +54,10 @@ The algebraic numbers do not contain $\pi$ and $e$, though.
 We define the **closed form numbers** $\mathbb{E}$ as those you get when you start with rational numbers and are allowed to apply addition, subtraction, multiplication, division and application of $\exp$ or $\log$ arbitrarily often. Take a look at Chow's paper if you want to have this definition more formal.
 The closed form numbers include all algebraic numbers expressible as radicals:
 $$\sqrt[n]{a}=a^{\frac{1}{n}}=e^{\log(a) \cdot \frac{1}{n}}=\exp\left(\frac{\log(a)}{n}\right)$$
-They also include $i=\sqrt[2]{-1}$, as well as $e = \exp(1)$ and $\pi = \frac{\log(-1)}{i}$.
+They also include $i=\sqrt[2]{-1}$, as well as $e = \exp(1)$ and $\pi = -i\log(-1)$.
 Generally, the closed form numbers according to this definition capture pretty much every values you can compute without resorting to numerical approximation methods like Newton's method.
 I'll give a few more examples in case you're not yet convinced of this:
-If $x$ is a closed form number, then $\sin{x}$ is also a closed form number:
+If $x$ is a closed form number, then $\sin(x)$ is also a closed form number:
 $$
 \sin(x) = \frac{\exp(ix) - \exp(-ix)}{2i}
 $$
@@ -74,7 +74,7 @@ We call such functions, that map closed form numbers to closed form numbers by o
 
 Not all numbers in $\overline{\mathbb{Q}}$ can be expressed in closed form. The 5 roots of $2x^5-10x+5$ are algebraic by definition, but can be shown using Galois Theory to not be expressible by radicals. Chow showed that they can't be expressed in closed form conditional on Schanuel's conjecture. Khovanskii was later able to show this unconditionally.
 
-Lastly, the Definition of **elementary numbers** $\mathbb{L}$ is similar to the definition of closed form numbers, but we are now also allowed to get the roots of polynomials. $\mathbb{L}$ clearly contains all algebraic numbers as well as all closed form numbers.
+Lastly, the definition of **elementary numbers** $\mathbb{L}$ is similar to the definition of closed form numbers, but we are now also allowed to get the roots of polynomials. $\mathbb{L}$ clearly contains all algebraic numbers as well as all closed form numbers.
 
 We now have everything in place to state Lin's result.
 
@@ -171,3 +171,8 @@ $$
 Since $\varphi$ is a closed form function, if $f^{-1}$ was a closed form function,
 $\alpha$ would be a closed form number. But this is a contradiction to the fact that $\alpha$ is not a closed form number by Lin's theorem and the assumption that Schanuel's conjecture is true.
 Therefore, $f^{-1}$ is not a closed form function, which is what we wanted to show.
+
+### References
+
+[Ferng-Chin Lin 1983: Schanuel's conjecture implies Ritt's conjectures](https://www.jstor.org/stable/43836165)
+[Timothy Chow 1999: What is a closed form number](http://timothychow.net/closedform.pdf)
