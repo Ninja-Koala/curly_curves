@@ -13,10 +13,10 @@ categories = [
 images = ""
 +++
 
-Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but in the Bernstein basis, which enables us to define the curve using control points. The first and last are the starting and endpoint of the curves, the others kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves have three control points, cubic Bézier curves have four. If you want to know more, [wikipedia](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
+Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but in the Bernstein basis, which enables us to define the curve using control points. The first and last are the starting and endpoint of the curves, the others kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves have three control points, cubic Bézier curves have four. If you want to know more, [Wikipedia](https://en.Wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
 
 # Arc lengths
-The arc length of a curve is the distance traveled when going from the start to the end.
+The arc length of a curve is the distance traveled when going away from the start to the end.
 It is well known in the computer graphics community that the arc length of cubic bezier curves has no closed form and has to be computed numerically. Sadly, i've not yet seen a proof sketch for that, though. Most people just link to the Abel-Ruffini theorem, but that is not directly applicable as far as i know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $t$ to the point on the curve that is an arc length of $t$ apart from the start. That amounts to computing the inverse of the arc length formula. The inverse of the arc length of a quadratic Bézier is also generally accepted to have no closed form solution, but i've also not seen a proof for that before.
 
 In this post, i will show that, assuming the Schanuel conjecture, indeed no such formula exists.
@@ -30,7 +30,7 @@ I was delighted that someone gave such a nice overview over the topic and starte
 
 Schanuel's conjecture is widely believed to be true, but seems pretty hard to proof.
 It basically says that there is no unexpected polynomial relationship between the numbers $\alpha$ and
-$e^\alpha$. For all the details, see [wikipedia](https://en.wikipedia.org/wiki/Schanuel%27s_conjecture).
+$e^\alpha$. For all the details, see [Wikipedia](https://en.Wikipedia.org/wiki/Schanuel%27s_conjecture).
 
 Looking at Lin's result, i thought it looked promising for proving the nonexistence of a closed form arc length parametrization. Of course, it's a bummer that it depends on an unproven conjecture, but well.
 The rest of the post assumes Schanuel's conjecture to be true.
@@ -47,7 +47,7 @@ A polynomial $p$ is called **irreducible**, if there are no non-constant polynom
 such that $p = f \cdot g$. The irreducible polynomials can be seen as an analogon of prime numbers for polynomials.
 
 Now, let's take a look at the **algebraic numbers** $\overline{\mathbb{Q}}$: all numbers that are roots of a polynomial with rational coefficients. This includes all rational numbers: Let $a \in \mathbb{Q}$, then $a$
-is trivially the root of the polynomial $x-a$. But it also includes a lot of irrational numbers, like $\sqrt{2}$ which is the root of $x^2-2$. It also includes the imaginary unit $i$, which is the solution of $x^2+1$. If you're not familiar with $i$, take a look at the [complex numbers](https://en.wikipedia.org/wiki/Complex_number). They may seem a bit weird at first glance, but actually make things easier in a lot of cases.
+is trivially the root of the polynomial $x-a$. But it also includes a lot of irrational numbers, like $\sqrt{2}$ which is the root of $x^2-2$. It also includes the imaginary unit $i$, which is the solution of $x^2+1$. If you're not familiar with $i$, take a look at the [complex numbers](https://en.Wikipedia.org/wiki/Complex_number). They may seem a bit weird at first glance, but actually make things easier in a lot of cases.
 
 The algebraic numbers do not contain $\pi$ and $e$, though.
 
