@@ -17,6 +17,9 @@ fediverse = 0
 Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but in the Bernstein basis, which enables us to define the curve using control points. The first and last are the starting and endpoint of the curves, the others kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves have three control points, cubic Bézier curves have four. If you want to know more, [Wikipedia](https://en.Wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
 
 # Arc lengths
+
+{{< figure src="/arc_lengths.svg" class="mid" caption="Two cubic Bézier curves with different arc lengths" >}}
+
 The arc length of a curve is the distance traveled when going away from the start to the end.
 It is well known in the computer graphics community that the arc length of cubic bezier curves has no closed form and has to be computed numerically. Sadly, i've not yet seen a proof sketch for that, though. Most people just link to the Abel-Ruffini theorem, but that is not directly applicable as far as i know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $t$ to the point on the curve that is an arc length of $t$ apart from the start. That amounts to computing the inverse of the arc length formula. The inverse of the arc length of a quadratic Bézier is also generally accepted to have no closed form solution, but i've also not seen a proof for that before.
 
@@ -56,7 +59,7 @@ We define the **closed form numbers** $\mathbb{E}$ as those you get when you sta
 The closed form numbers include all algebraic numbers expressible as radicals:
 $$\sqrt[n]{a}=a^{\frac{1}{n}}=e^{\log(a) \cdot \frac{1}{n}}=\exp\left(\frac{\log(a)}{n}\right)$$
 They also include $i=\sqrt[2]{-1}$, as well as $e = \exp(1)$ and $\pi = -i\log(-1)$.
-Generally, the closed form numbers according to this definition capture pretty much every values you can compute without resorting to numerical approximation methods like Newton's method.
+Generally, the closed form numbers according to this definition capture pretty much every values you can compute without resorting to numerical approximation methods like [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method).
 I'll give a few more examples in case you're not yet convinced of this:
 If $x$ is a closed form number, then $\sin(x)$ is also a closed form number:
 $$
@@ -96,13 +99,16 @@ Let's start by stating what we would like to have if it was possible:
 We want to have a closed form formula, that given the control points of any quadratic Bézier curve and any parameter $t$, computes a point on the curve that is exactly an arc length $t$ apart from the starting point. I will show this to be impossible, by giving a single curve and parameter $t$ such that it's impossible. I'll just be using a Bézier curve which makes the calculations simple.
 
 # The proof
+
+{{< figure src="/quadratic_bezier.svg" class="mid" caption="Our quadratic Bézier curve" >}}
+
 I'm taking the control points to be
 $$
 p_0=\begin{pmatrix}0\\\0\end{pmatrix}, \\,
 p_1=\begin{pmatrix}\frac{1}{2}\\\0\end{pmatrix}, \\,
 p_1=\begin{pmatrix}1\\\ \frac{1}{2}\end{pmatrix}
 $$
-Which leads to the $x$ and $y$ coordinates of the curve points being:
+Which leads to the $x$ and $y$ coordinates of the curve points at parameter $t$ being:
 $$
 \begin{aligned}
 x(t) &= t \\\
@@ -130,7 +136,14 @@ $$
 4x \cdot f(\varphi^{-1}(x)) = x^4 + 2x \cdot \log(x) -1
 $$
 
-We are now in the situation where we can apply Lin's result: Define $F(x,y) = x^4+2xy -1 \in \overline{\mathbb{Q}}[x,y]$. Since $F$ is irreducible, we get that any $\alpha$ with $F(\alpha, \log(\alpha))$ is $1$ or nonelementary. Let's check if it could be 1:
+We are now in the situation where we can apply Lin's result: Define $F(x,y) = x^4+2xy -1 \in \overline{\mathbb{Q}}[x,y]$.
+For checking the irreducibility, i just use [sage](https://www.sagemath.org/):
+```sage
+sage: R.<x,y> = QQbar[]
+sage: factor(x^4+2*x*y+1)
+x^4 + 2*x*y + 1
+```
+Since $F$ is irreducible, we get that any $\alpha$ with $F(\alpha, \log(\alpha))$ is $1$ or nonelementary. Let's check if it could be 1:
 $$
 1^4+2\cdot 1 \cdot \log(1) - 1 = 1 + 2 \cdot 0 - 1 = 0
 $$
@@ -172,6 +185,9 @@ $$
 Since $\varphi$ is a closed form function, if $f^{-1}$ was a closed form function,
 $\alpha$ would be a closed form number. But this is a contradiction to the fact that $\alpha$ is not a closed form number by Lin's theorem and the assumption that Schanuel's conjecture is true.
 Therefore, $f^{-1}$ is not a closed form function, which is what we wanted to show.
+
+Of course, we can compute $f^{-1}$ and $\alpha$ numerically, for example using Newton's method.
+So, if you're curious, we get: $\alpha \approx 0.609440243339721$.
 
 ### References
 
