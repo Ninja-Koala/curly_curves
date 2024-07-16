@@ -2,7 +2,7 @@
 title = "Bézier curve arc length parametrizations"
 description = ""
 tags = [
-    "bézier",
+    "Bézier",
     "schanuel conjecture",
     "closed form",
 ]
@@ -13,15 +13,14 @@ categories = [
 images = ""
 +++
 
-# Bézier curves
-Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but in the Bernstein basis, which enables us to define the curve using start and end points and control points which kind of bend the curve. The two types of bézier curves which are generally used are quadratic and cubic bézier curves. Quadratic bézier curves have one control point, cubic bézier curves have three. If you want to know more, [wikipedia](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
+Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but in the Bernstein basis, which enables us to define the curve using control points. The first and last are the starting and endpoint of the curves, the others kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves have three control points, cubic Bézier curves have four. If you want to know more, [wikipedia](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
 
 # Arc lengths
 The arc length of a curve is the distance traveled when going from the start to the end.
-It is well known in the computer graphics community that the arc length of cubic bezier curves has no closed form and has to be computed numerically. Sadly, i've not yet seen a proof sketch for that, though. Most people just link to the Abel-Ruffini theorem, but that is not directly applicable as far as i know. I'll leave the challenge of proving that to a later post and deal with the quadratic bézier curves for now. The arc length of quadratic bézier curves actually can be computed with a closed form expression. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $t$ to the point on the curve that is an arc length of $t$ apart from the start. That amounts to computing the inverse of the arc length formula. The inverse of the arc length of a quadratic bézier is also generally accepted to have no closed form solution, but i've also not seen a proof for that before.
+It is well known in the computer graphics community that the arc length of cubic bezier curves has no closed form and has to be computed numerically. Sadly, i've not yet seen a proof sketch for that, though. Most people just link to the Abel-Ruffini theorem, but that is not directly applicable as far as i know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $t$ to the point on the curve that is an arc length of $t$ apart from the start. That amounts to computing the inverse of the arc length formula. The inverse of the arc length of a quadratic Bézier is also generally accepted to have no closed form solution, but i've also not seen a proof for that before.
 
 In this post, i will show that, assuming the Schanuel conjecture, indeed no such formula exists.
-Don't worry if you're not so deep into abstract math, i'm basically applying some substitutions to bring the relevant expression into a form where i can use a known result. Also, i'm trying my best to make this post easy to follow. I'm assuming you know how to do calculations like integration, and how to use $\exp$ and $\log$, though.
+Don't worry if you're not so deep into abstract math, i'm basically applying some substitutions to bring the relevant expression into a form where i can use a known result. Also, i'm trying my best to make this post easy to follow. I'm assuming you know how to do calculations like integration, and how to use the exponential function $\exp$ and the natural logarithm $\log$, though.
 
 # But how to prove that?
 
@@ -34,6 +33,7 @@ It basically says that there is no unexpected polynomial relationship between th
 $e^\alpha$. For all the details, see [wikipedia](https://en.wikipedia.org/wiki/Schanuel%27s_conjecture).
 
 Looking at Lin's result, i thought it looked promising for proving the nonexistence of a closed form arc length parametrization. Of course, it's a bummer that it depends on an unproven conjecture, but well.
+The rest of the post assumes Schanuel's conjecture to be true.
 
 OK, let's start digging into the math:
 
@@ -51,14 +51,30 @@ is trivially the root of the polynomial $x-a$. But it also includes a lot of irr
 
 The algebraic numbers do not contain $\pi$ and $e$, though.
 
-We define the **closed form numbers** $\mathbb{E}$ as the smallest set of numbers that contains the rational numbers and is closed under addition, subtraction, multiplication, division and application of $\exp$ or $\log$. Take a look at Chow's paper if you want to have this definition a bit more formal.
+We define the **closed form numbers** $\mathbb{E}$ as those you get when you start with rational numbers and are allowed to apply addition, subtraction, multiplication, division and application of $\exp$ or $\log$ arbitrarily often. Take a look at Chow's paper if you want to have this definition more formal.
 The closed form numbers include all algebraic numbers expressible as radicals:
 $$\sqrt[n]{a}=a^{\frac{1}{n}}=e^{\log(a) \cdot \frac{1}{n}}=\exp\left(\frac{\log(a)}{n}\right)$$
 They also include $i=\sqrt[2]{-1}$, as well as $e = \exp(1)$ and $\pi = \frac{\log(-1)}{i}$.
+Generally, the closed form numbers according to this definition capture pretty much every values you can compute without resorting to numerical approximation methods like Newton's method.
+I'll give a few more examples in case you're not yet convinced of this:
+If $x$ is a closed form number, then $\sin{x}$ is also a closed form number:
+$$
+\sin(x) = \frac{\exp(ix) - \exp(-ix)}{2i}
+$$
+Similarly, we get:
+$$
+\tanh(x) = \frac{\exp(x)-\exp(-x)}{\exp(x)+\exp(-x)}
+$$
+and:
+$$
+\text{acos}(x) = -i \log\left(x+\exp\left(\frac{\log(x^2-1)}{2}\right)\right)
+$$
+
+We call such functions, that map closed form numbers to closed form numbers by only using allowed operations **closed form functions**.
 
 Not all numbers in $\overline{\mathbb{Q}}$ can be expressed in closed form. The 5 roots of $2x^5-10x+5$ are algebraic by definition, but can be shown using Galois Theory to not be expressible by radicals. Chow showed that they can't be expressed in closed form conditional on Schanuel's conjecture. Khovanskii was later able to show this unconditionally.
 
-Lastly, we define the **elementary numbers** $\mathbb{L}$ as all numbers which are the root of a polynomial with closed form coefficients. $\mathbb{L}$ clearly contains all algebraic numbers as well as all closed form numbers.
+Lastly, the Definition of **elementary numbers** $\mathbb{L}$ is similar to the definition of closed form numbers, but we are now also allowed to get the roots of polynomials. $\mathbb{L}$ clearly contains all algebraic numbers as well as all closed form numbers.
 
 We now have everything in place to state Lin's result.
 
@@ -70,3 +86,88 @@ We can reformulate that slightly by noting that $\alpha$ is elementary if and on
 
 ### Variant of Lin's theorem
 If Schanuel's conjecture is true and $f(x,y) \in \overline{\mathbb{Q}}[x,y]$ is an irreducible polynomial involving both $x$ and $y$ and $f(\alpha, \log(\alpha)) = 0$ for some $\alpha \in \mathbb{C}$, then either $\alpha = 1$ or $\alpha \notin \mathbb{L}$.
+
+I hope i haven't lost you yet :D
+
+So how does any of this apply to quadratic Bézier curves?
+Let's start by stating what we would like to have if it was possible:
+
+We want to have a closed form formula, that given the control points of any quadratic Bézier curve and any parameter $t$, computes a point on the curve that is exactly an arc length $t$ apart from the starting point. I will show this to be impossible, by giving a single curve and parameter $t$ such that it's impossible. I'll just be using a Bézier curve which makes the calculations simple.
+
+# The proof
+I'm taking the control points to be
+$$
+p_0=\begin{pmatrix}0\\\0\end{pmatrix}, \\,
+p_1=\begin{pmatrix}\frac{1}{2}\\\0\end{pmatrix}, \\,
+p_1=\begin{pmatrix}1\\\ \frac{1}{2}\end{pmatrix}
+$$
+Which leads to the $x$ and $y$ coordinates of the curve points being:
+$$
+\begin{aligned}
+x(t) &= t \\\
+y(t) &= \frac{t^2}{2}
+\end{aligned}
+$$
+The arc length of the curve is given by the integral over the length of the tangent:
+$$
+\begin{aligned}
+f(t) &= \int_0^t \sqrt{x'(s)^2+y'(s)^2} \\: \mathrm{d}s \\\
+&= \int_0^t \sqrt{s^2+1} \\: \mathrm{d}s \\\
+&= \frac{1}{2} \left(\\, t \cdot \sqrt{t^{2} + 1} + \operatorname{arsinh}\left(t\right)\right) \\\
+&= \frac{1}{2} \left(\\, t \cdot \sqrt{t^{2} + 1} + \log\left(t + \sqrt{t^2+1}\right)\right)
+\end{aligned}
+$$
+
+We now want to get rid of the expression in the logarithm.
+We define $\varphi(t) = t + \sqrt{t^2+1}$ and get the inverse $\varphi^{-1}(t) = \frac{t^2-1}{2t}$.
+By substituting $t$ with $\varphi^{-1}(x)$ and multiplying with $2$ we get:
+$$
+2 \cdot f(\varphi^{-1}(x)) = \frac{x^4-1}{2x} + \log(x)
+$$
+We multiply with $2x$ to get:
+$$
+4x \cdot f(\varphi^{-1}(x)) = x^4 + 2x \cdot \log(x) -1
+$$
+
+We are now in the situation where we can apply Lin's result: Define $F(x,y) = x^4+2xy -1 \in \overline{\mathbb{Q}}[x,y]$. Since $F$ is irreducible, we get that any $\alpha$ with $F(\alpha, \log(\alpha))$ is $1$ or nonelementary. Let's check if it could be 1:
+$$
+1^4+2\cdot 1 \cdot \log(1) - 1 = 1 + 2 \cdot 0 - 1 = 0
+$$
+OK, shit. This is not going as planned. I wanted to show that the solution is nonelementary, but it turns ot to just be 1.
+Let's try to fix that. How about another substitution? If we substitute $x$ with $2x$, we get:
+$$
+\begin{aligned}
+8x \cdot f(\varphi^{-1}(2x)) &= 16x^4 + 4x \cdot \log(2x) - 1 \\\
+\iff 8x \cdot f(\varphi^{-1}(2x)) &= 16x^4 + 4x \cdot \log(x)+4x \log(2) - 1 \\\
+\iff 8x \cdot f(\varphi^{-1}(2x)) - 4x \log(2)&= 16x^4 + 4x \cdot \log(x) - 1
+\end{aligned}
+$$
+Now define $G(x,y) = 16x^4+4xy-1$. This is irreducible as well. Let's check for the special case of $\alpha = 1$ again.
+$$
+16 \cdot 1^4+4\cdot 1 \cdot \log(1) - 1 = 16 + 2 \cdot 0 - 1 = 15
+$$
+Nice, $1$ is no solution this time. So let $\alpha$ be a number such that $$G(\alpha,\log(\alpha))=16\alpha^4 + 4x \cdot \log(\alpha) - 1=0.$$
+Then, by our variant of Lin's Theorem, $\alpha \notin \mathbb{L}$. Therefore, $\alpha \notin \mathbb{E}$.
+
+Since $G(\alpha, \log(\alpha))=0$, by the above equation we get:
+$$
+\begin{aligned}
+8\alpha \cdot f(\varphi^{-1}(2\alpha)) - 4\alpha \log(2) &= 0 \\\
+\iff 8\alpha \cdot f(\varphi^{-1}(2\alpha)) &= 4\alpha \log(2) \\\
+\iff 2\alpha \cdot f(\varphi^{-1}(2\alpha)) &= \alpha \log(2)
+\end{aligned}
+$$
+Clearly $\alpha \neq 0$ since $\alpha \notin \mathbb{E}$, so we can divide by $\alpha$:
+$$
+\begin{aligned}
+2 \cdot f(\varphi^{-1}(2\alpha)) &= \log(2) \\\
+f(\varphi^{-1}(2\alpha)) &= \frac{\log(2)}{2} \\\
+\varphi^{-1}(2\alpha) &= f^{-1}\left(\frac{\log(2)}{2}\right) \\\
+2\alpha &= \varphi\left(f^{-1}\left(\frac{\log(2)}{2}\right)\right) \\\
+\alpha &= \frac{\varphi\left(f^{-1}\left(\frac{\log(2)}{2}\right)\right)}{2} \\\
+\end{aligned}
+$$
+
+Since $\varphi$ is a closed form function, if $f^{-1}$ was a closed form function,
+$\alpha$ would be a closed form number. But this is a contradiction to the fact that $\alpha$ is not a closed form number by Lin's theorem and the assumption that Schanuel's conjecture is true.
+Therefore, $f^{-1}$ is not a closed form function, which is what we wanted to show.
