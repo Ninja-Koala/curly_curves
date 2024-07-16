@@ -13,9 +13,9 @@ pygmentsCodeFences = true
 [author]
     name = "NinjaKoala"
     github = "Ninja-Koala"
-	shadertoy = "NinjaKoala"
-	mastodon = "chaos.social/@NinjaKoala"
-	pouet = "104804"
+    shadertoy = "NinjaKoala"
+    mastodon = "chaos.social/@NinjaKoala"
+    pouet = "104804"
     #gitlab = "Ninja-Koala"
     #stackoverflow = "username"
     #youtube = "user/username" # or channel/channelname
@@ -29,6 +29,10 @@ pygmentsCodeFences = true
     #homepageLength = 10
     mathjax = true #Enable display of mathematics using mathjax (LaTeX syntax)
     #katex = true #Enable display of mathematics using katex (Faster LaTeX rendering)
+
+    [params.comment.fediverse]
+        host = "chaos.social"
+        user = "NinjaKoala"
 
 # uncomment to enable the Tags link on the main toolbar
 #  [[menu.main]]

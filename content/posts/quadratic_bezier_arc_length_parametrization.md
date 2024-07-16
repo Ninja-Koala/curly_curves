@@ -3,14 +3,15 @@ title = "Bézier curve arc length parametrizations"
 description = ""
 tags = [
     "Bézier",
-    "schanuel conjecture",
-    "closed form",
+    "Schanuel conjecture",
+    "Closed form",
 ]
 date = "2024-07-15"
 categories = [
     "proofs"
 ]
 images = ""
+fediverse = 0
 +++
 
 Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but in the Bernstein basis, which enables us to define the curve using control points. The first and last are the starting and endpoint of the curves, the others kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves have three control points, cubic Bézier curves have four. If you want to know more, [Wikipedia](https://en.Wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
@@ -118,7 +119,7 @@ f(t) &= \int_0^t \sqrt{x'(s)^2+y'(s)^2} \\: \mathrm{d}s \\\
 \end{aligned}
 $$
 
-We now want to get rid of the expression in the logarithm.
+We now want to get rid of the expression inside the logarithm.
 We define $\varphi(t) = t + \sqrt{t^2+1}$ and get the inverse $\varphi^{-1}(t) = \frac{t^2-1}{2t}$.
 By substituting $t$ with $\varphi^{-1}(x)$ and multiplying with $2$ we get:
 $$
