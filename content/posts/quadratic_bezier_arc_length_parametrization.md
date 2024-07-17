@@ -109,7 +109,7 @@ I hope I haven't lost you yet :D
 So how does any of this apply to quadratic Bézier curves?
 Let's start by stating what we would like to have if it was possible:
 
-We want to have a closed form formula, that given the control points of any quadratic Bézier curve and any parameter $t$, computes a point on the curve that is exactly an arc length $t$ apart from the starting point. I will show this to be impossible, by giving a single curve and parameter $t$ such that it's impossible. I didn't need to try a lot of curves to find one where the proof works, I just took a curve which makes the mathematical expressions small.
+We want to have a closed form formula, that given the control points of any quadratic Bézier curve and any parameter $s$, computes a point on the curve that is exactly an arc length $s$ apart from the starting point. I will show this to be impossible, by giving a single curve and parameter $s$ such that it's impossible. I didn't need to try a lot of curves to find one where the proof works, I just took a curve which makes the involved mathematical expressions small.
 
 # The proof
 
@@ -138,7 +138,7 @@ f(t) &= \int_0^t \sqrt{x'(s)^2+y'(s)^2} \\: \mathrm{d}s \\\
 \end{aligned}
 $$
 
-We now want to get rid of the expression inside the logarithm, in order to be able to apply Lin's theorem later.
+We now want to get rid of the expression inside the logarithm, in order to be able to apply Lin's theorem.
 We define $\varphi(t) = t + \sqrt{t^2+1}$ and get the inverse $\varphi^{-1}(t) = \frac{t^2-1}{2t}$.
 By substituting $t$ with $\varphi^{-1}(x)$ and multiplying with $2$ we get:
 $$
