@@ -11,7 +11,7 @@ categories = [
     "proofs"
 ]
 images = ""
-fediverse = 1
+fediverse = 112804172497431735
 +++
 
 Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but given in the Bernstein basis, which enables us to define the curve using control points. The first and last control point define the start and endpoint of the curves, the intermediate control points kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves are given by three control points, cubic Bézier curves by four. If you want to know more, [Wikipedia](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
