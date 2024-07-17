@@ -31,8 +31,8 @@ pygmentsCodeFences = true
     #katex = true #Enable display of mathematics using katex (Faster LaTeX rendering)
 
     [params.comment.fediverse]
-        host = "chaos.social"
-        user = "NinjaKoala"
+        host = "mathstodon.xyz"
+        user = "curlycurves"
 
 # uncomment to enable the Tags link on the main toolbar
 #  [[menu.main]]
