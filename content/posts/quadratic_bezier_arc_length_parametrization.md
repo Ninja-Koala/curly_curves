@@ -63,7 +63,7 @@ There are a lot of similar examples, and a positive resolution to Schanuel's con
 We define the **closed form numbers** $\mathbb{E}$ as those you get when you start with rational numbers and are allowed to apply addition, subtraction, multiplication, division and application of $\exp$ or $\log$ arbitrarily often. Take a look at Chow's paper if you want to have this definition more formal.
 The closed form numbers include all algebraic numbers expressible as radicals:
 $$\sqrt[n]{a}=a^{\frac{1}{n}}=e^{\log(a) \cdot \frac{1}{n}}=\exp\left(\frac{\log(a)}{n}\right)$$
-They also include $i=\sqrt[2]{-1}$, as well as $e = \exp(1)$ and $\pi = -i\log(-1)$.
+They also include $i=\sqrt{-1}$, as well as $e = \exp(1)$ and $\pi = -i\log(-1)$.
 Generally, the closed form numbers according to this definition capture pretty much every values you can compute without resorting to numerical approximation methods like [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method).
 I'll give a few more examples in case you're not yet convinced of this:
 If $x$ is a closed form number, then $\sin(x)$ is also a closed form number:
