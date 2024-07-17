@@ -3,7 +3,7 @@ title = "Bézier curve arc length parametrizations"
 description = ""
 tags = [
     "Bézier",
-    "Schanuel conjecture",
+    "Schanuel's conjecture",
     "Closed form",
 ]
 date = "2024-07-17"
@@ -23,7 +23,7 @@ Bézier curves are widely used for defining vector graphics. They are basically 
 The arc length of a curve is the distance traveled when moving along the curve from start to end.
 It is well known in the computer graphics community that the arc length of cubic Bézier curves has no closed form and has to be computed numerically. Sadly, I've not yet seen a proof sketch for that, though. Most people just link to the [Abel-Ruffini theorem](https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem), but that is not directly applicable as far as I know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. It is also possible to compute the arc length \\(l(t)\\) up to some point on the curve given by the parameter \\(t\\). However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter \\(s\\) to the point on the curve that is an arc length of \\(s\\) apart from the start. That amounts to computing the inverse of \\(l(t)\\). The arc length parametrization of a quadratic Bézier is also generally accepted to have no closed form solution, but I've also not seen a proof for that before.
 
-In this post, I will show that, assuming the Schanuel conjecture, indeed no such formula exists.
+In this post, I will show that, assuming Schanuel's conjecture, indeed no such formula exists.
 Don't worry if you're not so deep into abstract math, I'm basically applying some substitutions to bring the relevant expression into a form where I can use a known result. Also, I'm trying my best to make this post easy to follow. I'm assuming you know how to do calculations like integration, and how to use the exponential function \\(\exp\\) and the natural logarithm \\(\log\\), though.
 
 # But how to prove that?
