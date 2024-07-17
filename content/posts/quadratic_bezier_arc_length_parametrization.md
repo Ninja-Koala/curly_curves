@@ -14,30 +14,30 @@ images = ""
 fediverse = 1
 +++
 
-Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but in the Bernstein basis, which enables us to define the curve using control points. The first and last are the starting and endpoint of the curves, the others kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves have three control points, cubic Bézier curves have four. If you want to know more, [Wikipedia](https://en.Wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
+Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but given in the Bernstein basis, which enables us to define the curve using control points. The first and last control point define the start and endpoint of the curves, the indermediate control points affect the shape of the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves are given by three control points, cubic Bézier curves by four. If you want to know more, [Wikipedia](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
 
 # Arc lengths
 
 {{< figure src="/arc_lengths.svg" class="mid" caption="Two cubic Bézier curves with different arc lengths" >}}
 
-The arc length of a curve is the distance traveled when going from the start to the end.
-It is well known in the computer graphics community that the arc length of cubic bezier curves has no closed form and has to be computed numerically. Sadly, i've not yet seen a proof sketch for that, though. Most people just link to the Abel-Ruffini theorem, but that is not directly applicable as far as i know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $t$ to the point on the curve that is an arc length of $t$ apart from the start. That amounts to computing the inverse of the arc length formula. The inverse of the arc length of a quadratic Bézier is also generally accepted to have no closed form solution, but i've also not seen a proof for that before.
+The arc length of a curve is the distance traveled when moving along the curve from start to end.
+It is well known in the computer graphics community that the arc length of cubic Bézier curves has no closed form and has to be computed numerically. Sadly, I've not yet seen a proof sketch for that, though. Most people just link to the [Abel-Ruffini theorem](https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem), but that is not directly applicable as far as I know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $t$ to the point on the curve that is an arc length of $t$ apart from the start. That amounts to computing the inverse of the arc length formula. The inverse of the arc length of a quadratic Bézier is also generally accepted to have no closed form solution, but I've also not seen a proof for that before.
 
-In this post, i will show that, assuming the Schanuel conjecture, indeed no such formula exists.
-Don't worry if you're not so deep into abstract math, i'm basically applying some substitutions to bring the relevant expression into a form where i can use a known result. Also, i'm trying my best to make this post easy to follow. I'm assuming you know how to do calculations like integration, and how to use the exponential function $\exp$ and the natural logarithm $\log$, though.
+In this post, I will show that, assuming the Schanuel conjecture, indeed no such formula exists.
+Don't worry if you're not so deep into abstract math, I'm basically applying some substitutions to bring the relevant expression into a form where I can use a known result. Also, I'm trying my best to make this post easy to follow. I'm assuming you know how to do calculations like integration, and how to use the exponential function $\exp$ and the natural logarithm $\log$, though.
 
 # But how to prove that?
 
-At first glance, i had no idea how to tackle that.
-I've learned some Galois Theory, which enables you to prove that a polynomial has no solution in radicals (like the Abel-Ruffini Theorem mentioned above), but that is clearly not immediately applicable here. Hence, i used my favorite search engine and found this: https://math.stackexchange.com/a/4223360.
+At first glance, I had no idea how to tackle that.
+I've learned some Galois theory, which enables you to prove that a polynomial has no solution in radicals (like the Abel-Ruffini Theorem mentioned above), but that is clearly not immediately applicable here. Hence, I used my favorite search engine and found this: https://math.stackexchange.com/a/4223360.
 I was delighted that someone gave such a nice overview over the topic and started to look into the papers by Lin and Chow. Chow actually used Lin's result to prove there is no closed form solution for $x+e^x = 0$ and then proves that polynomials which can't be solved by radicals also can't be solved by using $\log$ and $\exp$. All those results are conditional, though and assume Schanuel's conjecture.
 
 Schanuel's conjecture is widely believed to be true, but seems pretty hard to proof.
 It basically says that there is no unexpected polynomial relationship between the numbers $\alpha$ and
-$e^\alpha$. For all the details, see [Wikipedia](https://en.Wikipedia.org/wiki/Schanuel%27s_conjecture).
+$e^\alpha$. For all the details, see [Wikipedia](https://en.wikipedia.org/wiki/Schanuel%27s_conjecture).
 
-Looking at Lin's result, i thought it looked promising for proving the nonexistence of a closed form arc length parametrization. Of course, it's a bummer that it depends on an unproven conjecture, but well.
-The rest of the post assumes Schanuel's conjecture to be true.
+Looking at Lin's result, I thought it looked promising for proving the nonexistence of a closed form arc length parametrization. Of course, it's a bummer that it depends on an unproven conjecture, but well.
+I will resort to accepting Schanuel's conjecture to be true, otherwise the desired result is probably out of reach.
 
 OK, let's start digging into the math:
 
@@ -46,14 +46,19 @@ OK, let's start digging into the math:
 First of all, $\mathbb{Q}$ are the **rational numbers**: all numbers that can be expressed as a fraction of two integers, for example: $\frac{1}{2}$, $-\frac{3}{2}$, $5=\frac{5}{1}$, and so on.
 
 Next we have the **polynomials** over $\mathbb{Q}$:
-We have the univariate polynomials $\mathbb{Q}[x]$, for example: $x^2+1$ or $x^3-\frac{x}{2}+\frac{1}{5}$. Then we have the bivariate polynomials $\mathbb{Q}[x,y]$, like $x^2+y^2-1$ or $\frac{x+y}{2}$.
+The polynomials in one variable $x$ are denoted by $\mathbb{Q}[x]$, examples include: $x^2+1$ or $x^3-\frac{x}{2}+\frac{1}{5}$. Additionally, $\mathbb{Q}[x,y]$  are the polynomials in the two variables $x$ and $y$, like $x^2+y^2-1$ or $\frac{x+y}{2}$.
+
 A polynomial $p$ is called **irreducible**, if there are no non-constant polynomials $f$ and $g$
-such that $p = f \cdot g$. The irreducible polynomials can be seen as an analogon of prime numbers for polynomials.
+such that $p = f \cdot g$. The irreducible polynomials can be seen as an analog of prime numbers for polynomials.
 
 Now, let's take a look at the **algebraic numbers** $\overline{\mathbb{Q}}$: all numbers that are roots of a polynomial with rational coefficients. This includes all rational numbers: Let $a \in \mathbb{Q}$, then $a$
-is trivially the root of the polynomial $x-a$. But it also includes a lot of irrational numbers, like $\sqrt{2}$ which is the root of $x^2-2$. It also includes the imaginary unit $i$, which is the solution of $x^2+1$. If you're not familiar with $i$, take a look at the [complex numbers](https://en.Wikipedia.org/wiki/Complex_number). They may seem a bit weird at first glance, but actually make things easier in a lot of cases.
+is trivially the root of the polynomial $x-a$. But it also includes a lot of irrational numbers, like $\sqrt{2}$ which is the root of $x^2-2$. It also includes the imaginary unit $i$, which is the solution of $x^2+1$. If you're not familiar with $i$, take a look at the [complex numbers](https://en.wikipedia.org/wiki/Complex_number). They may seem a bit weird at first glance, but actually make things easier in a lot of cases.
 
 The algebraic numbers do not contain $\pi$ and $e$, though.
+Proving that isn't easy. The famous problem of squaring the circle asks whether $\pi$ is in a certain subset of the algebraic numbers.
+It was posed by ancient Greek mathematicians and was solved only in 1882 by Lindemann who showed that $\pi$ is not algebraic.
+Still, it is unproven that $\pi + e$ is not algebraic, although pretty much everyone thinks so.
+There are a lot of similar examples, and a positive resolution to Schanuel's conjecture would settle all of them.
 
 We define the **closed form numbers** $\mathbb{E}$ as those you get when you start with rational numbers and are allowed to apply addition, subtraction, multiplication, division and application of $\exp$ or $\log$ arbitrarily often. Take a look at Chow's paper if you want to have this definition more formal.
 The closed form numbers include all algebraic numbers expressible as radicals:
@@ -76,7 +81,7 @@ $$
 
 We call such functions, that map closed form numbers to closed form numbers by only using allowed operations **closed form functions**.
 
-Not all numbers in $\overline{\mathbb{Q}}$ can be expressed in closed form. The 5 roots of $2x^5-10x+5$ are algebraic by definition, but can be shown using Galois Theory to not be expressible by radicals. Chow showed that they can't be expressed in closed form conditional on Schanuel's conjecture. Khovanskii was later able to show this unconditionally.
+Not all numbers in $\overline{\mathbb{Q}}$ can be expressed in closed form. The 5 roots of $2x^5-10x+5$ are algebraic by definition, but can be shown using Galois theory to not be expressible by radicals. Chow showed that they can't be expressed in closed form conditional on Schanuel's conjecture. Khovanskii was later able to show this unconditionally.
 
 Lastly, the definition of **elementary numbers** $\mathbb{L}$ is similar to the definition of closed form numbers, but we are now also allowed to get the roots of polynomials. $\mathbb{L}$ clearly contains all algebraic numbers as well as all closed form numbers.
 
@@ -84,14 +89,18 @@ We now have everything in place to state Lin's result.
 
 ### Lin's theorem
 
-If Schanuel's conjecture is true and $f(x,y) \in \overline{\mathbb{Q}}[x,y]$ is an irreducible polynomial involving both $x$ and $y$ and $f(\alpha, e^\alpha) = 0$ for some $\alpha \in \mathbb{C}$, then either $\alpha = 0$ or $\alpha \notin \mathbb{L}$.
+If Schanuel's conjecture is true and $F(x,y) \in \overline{\mathbb{Q}}[x,y]$ is an irreducible polynomial involving both $x$ and $y$ and $f(\alpha, e^\alpha) = 0$ for some $\alpha \in \mathbb{C}$, then either $\alpha = 0$ or $\alpha \notin \mathbb{L}$.
 
-We can reformulate that slightly by noting that $\alpha$ is elementary if and only if $\log(\alpha)$ is elementary:
+Let's give an example: Let $F(x,y) = x+y$. Then $F(x,y) \in \mathbb{Q}$ is irreducible and contains both $x$ and $y$.
+Thus, if $\alpha$ satisfies $$F(\alpha,\exp(\alpha))=\alpha+\exp(\alpha)=0,$$ then $\alpha$ is not an elementary number.
+
+We can reformulate Lin's result slightly by noting that $\alpha$ is elementary if and only if $\log(\alpha)$ is elementary:
+Suppose $F(x,y) \in \mathbb{Q}[x,y]$ is irreducible and contains both $x$ and $y$ and $\alpha$ 
 
 ### Variant of Lin's theorem
-If Schanuel's conjecture is true and $f(x,y) \in \overline{\mathbb{Q}}[x,y]$ is an irreducible polynomial involving both $x$ and $y$ and $f(\alpha, \log(\alpha)) = 0$ for some $\alpha \in \mathbb{C}$, then either $\alpha = 1$ or $\alpha \notin \mathbb{L}$.
+If Schanuel's conjecture is true and $F(x,y) \in \overline{\mathbb{Q}}[x,y]$ is an irreducible polynomial involving both $x$ and $y$ and $f(\alpha, \log(\alpha)) = 0$ for some $\alpha \in \mathbb{C}$, then either $\alpha = 1$ or $\alpha \notin \mathbb{L}$.
 
-I hope i haven't lost you yet :D
+I hope I haven't lost you yet :D
 
 So how does any of this apply to quadratic Bézier curves?
 Let's start by stating what we would like to have if it was possible:
@@ -137,7 +146,7 @@ $$
 $$
 
 We are now in the situation where we can apply Lin's result: Define $F(x,y) = x^4+2xy -1 \in \overline{\mathbb{Q}}[x,y]$.
-For checking the irreducibility, i just use [sage](https://www.sagemath.org/):
+For checking the irreducibility, I just use [sage](https://www.sagemath.org/):
 ```sage
 sage: R.<x,y> = QQbar[]
 sage: factor(x^4+2*x*y+1)
@@ -147,7 +156,7 @@ Since $F$ is irreducible, we get that any $\alpha$ with $F(\alpha, \log(\alpha))
 $$
 1^4+2\cdot 1 \cdot \log(1) - 1 = 1 + 2 \cdot 0 - 1 = 0
 $$
-OK, shit. This is not going as planned. I wanted to show that the solution is nonelementary, but it turns ot to just be 1.
+OK, shit. This is not going as planned. I wanted to show that the solution is nonelementary, but it turns out to just be 1.
 Let's try to fix that. How about another substitution? If we substitute $x$ with $2x$, we get:
 $$
 \begin{aligned}
