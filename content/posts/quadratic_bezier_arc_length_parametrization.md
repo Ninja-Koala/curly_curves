@@ -11,7 +11,7 @@ categories = [
     "proofs"
 ]
 images = ""
-fediverse = 0
+fediverse = 1
 +++
 
 Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but in the Bernstein basis, which enables us to define the curve using control points. The first and last are the starting and endpoint of the curves, the others kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves have three control points, cubic Bézier curves have four. If you want to know more, [Wikipedia](https://en.Wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
@@ -20,7 +20,7 @@ Bézier curves are widely used for defining vector graphics. They are basically 
 
 {{< figure src="/arc_lengths.svg" class="mid" caption="Two cubic Bézier curves with different arc lengths" >}}
 
-The arc length of a curve is the distance traveled when going away from the start to the end.
+The arc length of a curve is the distance traveled when going from the start to the end.
 It is well known in the computer graphics community that the arc length of cubic bezier curves has no closed form and has to be computed numerically. Sadly, i've not yet seen a proof sketch for that, though. Most people just link to the Abel-Ruffini theorem, but that is not directly applicable as far as i know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $t$ to the point on the curve that is an arc length of $t$ apart from the start. That amounts to computing the inverse of the arc length formula. The inverse of the arc length of a quadratic Bézier is also generally accepted to have no closed form solution, but i've also not seen a proof for that before.
 
 In this post, i will show that, assuming the Schanuel conjecture, indeed no such formula exists.
