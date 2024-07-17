@@ -6,7 +6,7 @@ tags = [
     "Schanuel conjecture",
     "Closed form",
 ]
-date = "2024-07-15"
+date = "2024-07-18"
 categories = [
     "proofs"
 ]
