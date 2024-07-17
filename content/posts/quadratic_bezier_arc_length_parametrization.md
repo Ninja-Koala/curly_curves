@@ -14,14 +14,14 @@ images = ""
 fediverse = 1
 +++
 
-Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but given in the Bernstein basis, which enables us to define the curve using control points. The first and last control point define the start and endpoint of the curves, the indermediate control points affect the shape of the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves are given by three control points, cubic Bézier curves by four. If you want to know more, [Wikipedia](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
+Bézier curves are widely used for defining vector graphics. They are basically polynomial parametric curves, but given in the Bernstein basis, which enables us to define the curve using control points. The first and last control point define the start and endpoint of the curves, the intermediate control points kind of bend the curve. The two types of Bézier curves which are generally used are quadratic and cubic Bézier curves. Quadratic Bézier curves are given by three control points, cubic Bézier curves by four. If you want to know more, [Wikipedia](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) is a good starting point.
 
 # Arc lengths
 
 {{< figure src="/arc_lengths.svg" class="mid" caption="Two cubic Bézier curves with different arc lengths" >}}
 
 The arc length of a curve is the distance traveled when moving along the curve from start to end.
-It is well known in the computer graphics community that the arc length of cubic Bézier curves has no closed form and has to be computed numerically. Sadly, I've not yet seen a proof sketch for that, though. Most people just link to the [Abel-Ruffini theorem](https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem), but that is not directly applicable as far as I know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $t$ to the point on the curve that is an arc length of $t$ apart from the start. That amounts to computing the inverse of the arc length formula. The inverse of the arc length of a quadratic Bézier is also generally accepted to have no closed form solution, but I've also not seen a proof for that before.
+It is well known in the computer graphics community that the arc length of cubic Bézier curves has no closed form and has to be computed numerically. Sadly, I've not yet seen a proof sketch for that, though. Most people just link to the [Abel-Ruffini theorem](https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem), but that is not directly applicable as far as I know. I'll leave the challenge of proving that to a later post and deal with the quadratic Bézier curves for now. The arc length of quadratic Bézier curves actually can be computed with a closed form expression. It is also possible to compute the arc length $l(t)$ up to some point on the curve given by the parameter $t$. However, oftentimes you want to have an arc length parametrization, that is a parametrization that maps a parameter $s$ to the point on the curve that is an arc length of $s$ apart from the start. That amounts to computing the inverse of $l(t)$. The arc length parametrization of a quadratic Bézier is also generally accepted to have no closed form solution, but I've also not seen a proof for that before.
 
 In this post, I will show that, assuming the Schanuel conjecture, indeed no such formula exists.
 Don't worry if you're not so deep into abstract math, I'm basically applying some substitutions to bring the relevant expression into a form where I can use a known result. Also, I'm trying my best to make this post easy to follow. I'm assuming you know how to do calculations like integration, and how to use the exponential function $\exp$ and the natural logarithm $\log$, though.
@@ -29,11 +29,11 @@ Don't worry if you're not so deep into abstract math, I'm basically applying som
 # But how to prove that?
 
 At first glance, I had no idea how to tackle that.
-I've learned some Galois theory, which enables you to prove that a polynomial has no solution in radicals (like the Abel-Ruffini Theorem mentioned above), but that is clearly not immediately applicable here. Hence, I used my favorite search engine and found this: https://math.stackexchange.com/a/4223360.
+I've learned some Galois theory, which enables you to prove that a polynomial has no solution in radicals (the nth roots), but that is clearly not immediately applicable here. Hence, I used my favorite search engine and found this: https://math.stackexchange.com/a/4223360.
 I was delighted that someone gave such a nice overview over the topic and started to look into the papers by Lin and Chow. Chow actually used Lin's result to prove there is no closed form solution for $x+e^x = 0$ and then proves that polynomials which can't be solved by radicals also can't be solved by using $\log$ and $\exp$. All those results are conditional, though and assume Schanuel's conjecture.
 
-Schanuel's conjecture is widely believed to be true, but seems pretty hard to proof.
-It basically says that there is no unexpected polynomial relationship between the numbers $\alpha$ and
+Schanuel's conjecture is widely believed to be true, but seems pretty hard to prove.
+It basically says that there is no nontrivial polynomial relationship between the numbers $\alpha$ and
 $e^\alpha$. For all the details, see [Wikipedia](https://en.wikipedia.org/wiki/Schanuel%27s_conjecture).
 
 Looking at Lin's result, I thought it looked promising for proving the nonexistence of a closed form arc length parametrization. Of course, it's a bummer that it depends on an unproven conjecture, but well.
@@ -85,6 +85,8 @@ Not all numbers in $\overline{\mathbb{Q}}$ can be expressed in closed form. The 
 
 Lastly, the definition of **elementary numbers** $\mathbb{L}$ is similar to the definition of closed form numbers, but we are now also allowed to get the roots of polynomials. $\mathbb{L}$ clearly contains all algebraic numbers as well as all closed form numbers.
 
+{{< figure src="/elementary_numbers_venn_diagram.svg" class="mid" caption="An overview over the numbers we defined" >}}
+
 We now have everything in place to state Lin's result.
 
 ### Lin's theorem
@@ -93,9 +95,11 @@ If Schanuel's conjecture is true and $F(x,y) \in \overline{\mathbb{Q}}[x,y]$ is 
 
 Let's give an example: Let $F(x,y) = x+y$. Then $F(x,y) \in \mathbb{Q}$ is irreducible and contains both $x$ and $y$.
 Thus, if $\alpha$ satisfies $$F(\alpha,\exp(\alpha))=\alpha+\exp(\alpha)=0,$$ then $\alpha$ is not an elementary number.
+Hereby, you can prove that $f(x)=x+\exp(x)$ has no closed form inverse:
+Suppose $f^{-1}$ was a closed form function, then $\alpha = f^{-1}(0)$ would be a closed form number, contradicting Lin's theorem.
 
 We can reformulate Lin's result slightly by noting that $\alpha$ is elementary if and only if $\log(\alpha)$ is elementary:
-Suppose $F(x,y) \in \mathbb{Q}[x,y]$ is irreducible and contains both $x$ and $y$ and $\alpha$ 
+Just substitute $\alpha$ with $\log(\alpha)$ and switch $x$ and $y$.
 
 ### Variant of Lin's theorem
 If Schanuel's conjecture is true and $F(x,y) \in \overline{\mathbb{Q}}[x,y]$ is an irreducible polynomial involving both $x$ and $y$ and $f(\alpha, \log(\alpha)) = 0$ for some $\alpha \in \mathbb{C}$, then either $\alpha = 1$ or $\alpha \notin \mathbb{L}$.
@@ -105,7 +109,7 @@ I hope I haven't lost you yet :D
 So how does any of this apply to quadratic Bézier curves?
 Let's start by stating what we would like to have if it was possible:
 
-We want to have a closed form formula, that given the control points of any quadratic Bézier curve and any parameter $t$, computes a point on the curve that is exactly an arc length $t$ apart from the starting point. I will show this to be impossible, by giving a single curve and parameter $t$ such that it's impossible. I'll just be using a Bézier curve which makes the calculations simple.
+We want to have a closed form formula, that given the control points of any quadratic Bézier curve and any parameter $t$, computes a point on the curve that is exactly an arc length $t$ apart from the starting point. I will show this to be impossible, by giving a single curve and parameter $t$ such that it's impossible. I didn't need to try a lot of curves to find one where the proof works, I just took a curve which makes the mathematical expressions small.
 
 # The proof
 
@@ -134,7 +138,7 @@ f(t) &= \int_0^t \sqrt{x'(s)^2+y'(s)^2} \\: \mathrm{d}s \\\
 \end{aligned}
 $$
 
-We now want to get rid of the expression inside the logarithm.
+We now want to get rid of the expression inside the logarithm, in order to be able to apply Lin's theorem later.
 We define $\varphi(t) = t + \sqrt{t^2+1}$ and get the inverse $\varphi^{-1}(t) = \frac{t^2-1}{2t}$.
 By substituting $t$ with $\varphi^{-1}(x)$ and multiplying with $2$ we get:
 $$
