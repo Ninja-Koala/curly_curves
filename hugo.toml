@@ -4,7 +4,7 @@ title = 'Curly Curves'
 theme = 'kiera'
 canonifyurls = true
 
-paginate = 3
+pagination.pagerSize = 3
 
 summaryLength = 30
 enableEmoji = true
